@@ -123,7 +123,7 @@
                 <br />
                 <table width="100%">
                 <tr>
-  	    		<td>&copy; 2018 All Rights Reserved. This project is supported by the <b><a target="_blank" href="http://amii.ca">Alberta Machine Intelligence Institute Amii</a></b></td>
+  	    		<td>&copy; 2017 All Rights Reserved. This project is supported by the <b><a target="_blank" href="http://amii.ca">Alberta Machine Intelligence Institute Amii</a></b></td>
                 <td><a target="_blank" href="http://amii.ca"><img style="float: right; height: 50px; margin-top:-10px; " src="/cardea/static/img/amii.png" /></a></td>
                 </tr>
                 </table>
