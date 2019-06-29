@@ -1,4 +1,4 @@
-{extends file="template.tpl"}
+{extends file="layout.general.tpl"}
 
 {block name=title}404 Error{/block}
 
