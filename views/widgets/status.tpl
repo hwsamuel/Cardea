@@ -25,9 +25,6 @@
     }
 </style>
 
-<link rel="stylesheet" href="/cardea/static/simplemde/simplemde.min.css">
-<script src="/cardea/static/simplemde/simplemde.min.js"></script>
-
 <form method="POST" action="/cardea/{$forum}">
     {if isset($errors)}
     <div class="alert alert-danger" role="alert">
@@ -160,18 +157,18 @@
     </div>
 </div>
 
-<script>
-    var simplemde = new SimpleMDE({
-        element: document.getElementById("blogtext"),
-        toolbar: ["bold","italic","strikethrough","quote","|","ordered-list","unordered-list","|","link","image","|","preview","|","guide"],
-        forceSync: true,
-        status: false,
-        spellChecker: false
-    });
-    {if $forum == ''}
-        this.simplemde.codemirror.options.readOnly = true;
-    {/if}
+<script src="/cardea/static/ckeditor/ckeditor.js"></script>
 
+<script>
+    CKEDITOR.replace('blogtext',{
+        extraPlugins: 'bbcode',
+        toolbar: [
+            ['Bold', 'Italic', 'Strike'],
+            ['Link', 'Unlink'],
+            ['NumberedList', 'BulletedList', '-', 'Blockquote']
+        ]
+    });
+    
     $('.postbox').bind("keyup", null, function(event) {
         if (event.keyCode == 27 || event.keyCode == 8) 
         {

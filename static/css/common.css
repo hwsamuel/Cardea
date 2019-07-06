@@ -141,3 +141,31 @@ textarea
 {
 	min-height: 350px;
 }
+.votes:hover
+{
+    text-decoration: none;
+}
+
+
+#tagcloud
+{
+        color: #dda0dd;
+        font-family: Arial, verdana, sans-serif;
+        width:200px;
+        border: 1px solid black;
+    text-align: center;
+}
+
+#tagcloud a
+{
+        color: green;
+        text-decoration: none;
+        text-transform: capitalize;
+}
+
+.preview-thumb
+{
+    padding-top: 20px;
+    padding-bottom: 5px;
+    display: block;
+}

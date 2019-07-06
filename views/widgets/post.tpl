@@ -45,9 +45,12 @@
         </a>
         
         {if $vocab !== 'post' && $vocab !== 'comments'}
-            <a href="/cardea/post/{$post.id}/{$active}">{$post.title}</a>
+            <a href="/cardea/post/{$post.id}/{$active}"><b>{$post.title}</b></a>
         {else}
-            {$post.title}
+            <b>{$post.title}</b>
+        {/if}
+        {if $post.previewer != NULL}
+            <br /><a href="{$post.previewer}" class="preview-thumb" target="_blank"><img src="//image.thum.io/get/width/450/crop/400/{$post.previewer}" /></a>
         {/if}
         {if $vocab == 'post'}<br /><span id="{$vocab}-content-{$post.id}">{$post.content}</span>{/if}
     </td>

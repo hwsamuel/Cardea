@@ -52,7 +52,6 @@
     }
 </style>
         
-<script src="/cardea/static/simplemde/marked.js"></script>
 <script src="/cardea/static/d3/d3.v3.min.js"></script>
 
 <div class="row">

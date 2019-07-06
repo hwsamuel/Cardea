@@ -2,9 +2,9 @@
 session_start();
 session_regenerate_id();
 
-require 'static/pgbrowser/pgbrowser.php';
 require 'static/phpseclib/rsa.php';
 
+// @todo Regenerate public key pair
 $rsa_private_key = '-----BEGIN RSA PRIVATE KEY-----
 MIIBOQIBAAJBAI2syVtfIdgNeItqYUCV33ROxKu5nKSt3qlpjEbQsZuq4m5cpvtc
 woH811nbI6SnSXz3JabL8jeAkmzUQz+54PECAwEAAQJAKHXisZYbJ8U9Gm/Ao33J
@@ -19,85 +19,31 @@ $rsa_public_key = '8dacc95b5f21d80d788b6a614095df744ec4abb99ca4addea9698c46d0b19
 
 $rsa_public_key_parity = '010001';
 
-$pgb = new PGBrowser();
-$pgb->useCache = false;
-
 $rsa = new RSA($rsa_public_key, $rsa_private_key);
 
-class SIGWLogin
+class CAuth
 {
     static function validate()
     {
         return isset($_SESSION['logged_in']) ? TRUE : header('Location: /membersarea/login');
     }
 
-    static function _get_member_id($str)
-    {
-        $st_str= "<b>Member Number:</b>";
-        $ed_str = "<a href=";
-        $start = strpos($str, $st_str) + strlen($st_str);
-        $len = strpos($str, $ed_str, $start) - $start;
-        return trim(substr($str, $start, $len));
-    }
-    
     static function index()
     {
         global $smarty, $rsa_public_key, $rsa_public_key_parity;
-        if (isset($_SESSION['logged_in']))
-        {
-            header('Location: /membersarea/blogs');
-        }
-        else
-        {
-            $smarty->assign('rsa_public_key', $rsa_public_key);
-            $smarty->assign('rsa_public_key_parity', $rsa_public_key_parity);
-            $smarty->display('views/login.html');
-        }
-    }
-    
-    static function sso_login()
-    {
-        global $smarty, $rsa, $pgb, $rsa_public_key, $rsa_public_key_parity;
-        $username = trim($_POST['username_plain']);
-        $password = trim($_POST['password_plain']);
-        if ($username === "" || $password === "")
-        {
-            $msg = "Username or password cannot be blank";
-        }
-        else
-        {
-	    $username = $rsa->decryptor($_POST['username']);
-            $password = $rsa->decryptor($_POST['password']);
-            $page = $pgb->get('https://myacm.acm.org/dashboard.cfm?svc=curr');
-            $form = $page->forms(1);
-            $form->set('username', $username);
-            $form->set('password', $password);
-            $page = $form->submit();
-            $name = $page->at('//span[@id="breadcrumbs-you-are-here"]')->nodeValue;
-            $name = trim(str_replace("Logout", "", $name));
-            $content = $page->html;
-            $is_member = preg_match("~\bSIGWEB Membership\b~",$content);
-            if ($is_member == 1)
-            {
-                $mem_id = self::_get_member_id($content);
-                $_SESSION['logged_in'] = array($name, $mem_id);
-                header('Location: /membersarea/blogs/my');
-            }
-            else
-            {
-                $msg = "Invalid credentials or not SIGWEB member";
-            }
-        }
+        $_SESSION['display_name'] = 3;
+        
+        if (isset($_SESSION['display_name'])) header('Location: /cardea');
+
         $smarty->assign('rsa_public_key', $rsa_public_key);
         $smarty->assign('rsa_public_key_parity', $rsa_public_key_parity);
-        $smarty->assign('msg', $msg);
-        $smarty->display('views/login.html');
+        $smarty->display('views/signin.tpl');
     }
     
     static function logout()
     {
         session_unset();
         session_destroy();
-        header('Location: /membersarea/blogs');
+        header('Location: /cardea');
     }
 }
