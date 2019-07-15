@@ -1,6 +1,6 @@
 <?php
 
-class Comment extends Forum
+class Comment extends Core
 {
     
     private static $post_id;

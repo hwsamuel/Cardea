@@ -6,13 +6,12 @@ USE cardea_db;
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id int(11) NOT NULL AUTO_INCREMENT,
-    email varchar(100) NOT NULL,
+    email varchar(128) NOT NULL,
     login_key varchar(255) DEFAULT NULL,
     login_key_expiry datetime DEFAULT NULL,
     last_ip varchar(40) DEFAULT NULL,
     last_login datetime DEFAULT NULL,
-    display_name varchar(100) NOT NULL,
-    identicon varchar(255) DEFAULT NULL,
+    display_name varchar(20) NOT NULL,
     about_self varchar(255)  DEFAULT NULL,
     role enum('medic','patient','mod') NOT NULL DEFAULT 'patient',
     joined_date datetime DEFAULT CURRENT_TIMESTAMP,

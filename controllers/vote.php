@@ -1,6 +1,6 @@
 <?php
 
-class Vote extends Forum
+class Vote
 {
 	private static $post_id;
     private static $type_of;
@@ -37,8 +37,14 @@ class Vote extends Forum
     // Method: POST
     static function create()
     {
+        if (!self::validate())
+        {
+            echo 'Invalid values detected, please try again';
+            return FALSE;
+        }
+
         $data = self::delete();
-        
+
         $vote = R::dispense('votes');
         $vote->type_of = self::$type_of;
         $vote->post_id = self::$post_id;
@@ -54,7 +60,7 @@ class Vote extends Forum
         if (!self::validate())
         {
             echo 'Invalid values detected, please try again';
-            return;
+            return FALSE;
         }
 
         $exists = R::getCell("SELECT id FROM votes WHERE post_id = " . self::$post_id . " AND user_id = " . self::$user_id);

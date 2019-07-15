@@ -1,8 +1,6 @@
 <?php
-class Forum
+class Forum extends Core
 {
-    static $engine;
-    
     static function bubblenet($forum = NULL)
     {
         if ($forum !== NULL)
@@ -161,37 +159,28 @@ class Forum
     }
 
     // Adapted from https://www.namepros.com/threads/php-simple-bbcode-parse-function.266965/
-    static function parse_bbcode($body) {
+    static function parse_bbcode($body) 
+    {
         $find = array(
             "@\n@",
+            "/\[\*\]/",
             "/\[url\=(.+?)\](.+?)\[\/url\]/is",
             "/\[b\](.+?)\[\/b\]/is", 
             "/\[i\](.+?)\[\/i\]/is", 
             "/\[u\](.+?)\[\/u\]/is", 
-            "/\[color\=(.+?)\](.+?)\[\/color\]/is",
-            "/\[size\=(.+?)\](.+?)\[\/size\]/is", 
-            "/\[font\=(.+?)\](.+?)\[\/font\]/is",
-            "/\[center\](.+?)\[\/center\]/is",
-            "/\[right\](.+?)\[\/right\]/is",
-            "/\[left\](.+?)\[\/left\]/is",
             "/\[img\](.+?)\[\/img\]/is",
-            "/\[email\](.+?)\[\/email\]/is"
+            "/\[list\](.+?)\[\/list\]/is"
         );
 
         $replace = array(
             "<br />",
+            "<span style=\"padding-left: 15px; padding-right: 5px;\">&bull;</span>",
             "<a href=\"$1\" target=\"_blank\">$2</a>",
             "<strong>$1</strong>",
             "<em>$1</em>",
             "<span style=\"text-decoration:underline;\">$1</span>",
-            "<font color=\"$1\">$2</font>",
-            "<font size=\"$1\">$2</font>",
-            "<span style=\"font-family: $1\">$2</span>",
-            "<div style=\"text-align:center;\">$1</div>",
-            "<div style=\"text-align:right;\">$1</div>",
-            "<div style=\"text-align:left;\">$1</div>",
-            "<img src=\"$1\" alt=\"Image\" />",
-            "<a href=\"mailto:$1\" target=\"_blank\">$1</a>"
+            "<img src=\"$1\" alt=\"Image\" width='200px' />",
+            "$1"
         );
         $body = htmlspecialchars($body);
         $body = preg_replace($find, $replace, $body);
@@ -201,7 +190,7 @@ class Forum
     static function get_preview($post)
     {
         $keywords = $post->title.$post->content;
-        $pattern = "%https?://\S+\]?%"; // Accounts for BBCode formatting
+        $pattern = "%https?://\S+\]?\[?%"; // Accounts for BBCode formatting
         preg_match_all($pattern, $keywords, $matches); // Find hyperlinks
         $match = $matches[0];
         if (sizeof($match) <= 0) 
@@ -211,7 +200,12 @@ class Forum
         else
         {
             $previewer = $match[0];
+            
             $pos = strpos($previewer, ']');
+            $pos = $pos === FALSE ? strlen($previewer) : $pos;
+            $previewer = substr($previewer, 0, $pos);
+
+            $pos = strpos($previewer, '[');
             $pos = $pos === FALSE ? strlen($previewer) : $pos;
             $previewer = substr($previewer, 0, $pos);
         }
