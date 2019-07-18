@@ -10,7 +10,7 @@
             {include file='widgets/post.tpl' post=$comment vocab='comments'}
         {/if}
     {/foreach}
-    {if isset($signed_in)}
+    {if isset($smarty.session.display_name)}
     <p class="text-muted">
         <form method="POST" id="form-{$vocab}-comments-{$apost.id}">
             <textarea required maxlength="140" style="margin-bottom: 5px;" class="form-control input-sm" rows="1" name="new-{$vocab}-comment-{$apost.id}" id="new-{$vocab}-comment-{$apost.id}" placeholder="Add your comment"></textarea>

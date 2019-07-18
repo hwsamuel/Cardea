@@ -80,7 +80,7 @@
 	        		<li {if isset($active) && $active == "m2m"}class="active"{/if}><a href="{$base_url}/m2m">Medic to Medic <span class="badge">M2M</span></a></li>
                     <li {if isset($active) && $active == "groups"}class="active"{/if}><a href="{$base_url}/groups">Support Groups</a></li>
 				
-                {if !isset($signed_in)}
+                {if !isset($smarty.session.display_name)}
                     <li>
                     <div class="navbar-form navbar-right">
 				    <a href="{$base_url}/signin" class="btn btn-danger">Sign In</a>
@@ -91,12 +91,12 @@
             </div>
 		</div>
         
-        {if isset($signed_in)}
+        {if isset($smarty.session.display_name)}
         <div id="extra_bar">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <b><span class="glyphicon glyphicon-bookmark"></span> <a href="{$base_url}/profile">{$signed_in}</a></b><span class="space">&nbsp;</span>
+                        <b><span class="glyphicon glyphicon-bookmark"></span> <a href="{$base_url}/profile">{$smarty.session.display_name}</a></b><span class="space">&nbsp;</span>
                         <span class="text-muted small">View your profile</span>
                     </div>
                     <div class="col-md-8 text-right">
@@ -111,7 +111,7 @@
         {/if}
     </div>
     
-    <div class="container" {if isset($signed_in)}style="margin-top: 25px"{/if}>
+    <div class="container" {if isset($smarty.session.display_name)}style="margin-top: 25px"{/if}>
     	<noscript>
   	    <div class="alert alert-danger" role="alert">
   	        This website will <b>not</b> function without JavaScript. Please enable JavaScript to continue.

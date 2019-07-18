@@ -18,7 +18,6 @@ date_default_timezone_set($TIME_ZONE);
 
 R::setup("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USER, $DB_PWD);
 R::freeze(TRUE);
-//R::fancyDebug(TRUE);
 
 $smarty = new Smarty;
 $smarty->setTemplateDir('views');
@@ -31,7 +30,6 @@ $smarty->right_delimiter = "}";
 $groups = R::findAll('posts', "type_of = 'group' AND visibility = 'public'"); // @todo Add visibility filter
 $smarty->assign('groups', $groups);
 
-if (isset($_SESSION['display_name'])) $smarty->assign('signed_in', $_SESSION['display_name']); // @todo Align across all pages
 Core::$engine = $smarty;
 Core::$base_url = $BASE_URL;
 Core::$base_route = $BASE_ROUTE;
@@ -43,7 +41,9 @@ Auth::$public_parity = $PUB_PARITY;
 Auth::$rsa = $rsa;
 Auth::$admin_email = $ADMIN_EMAIL;
 
-//CProcess::get_bubblenet();
+// print_r($rsa->generate_keys());
+// CProcess::get_bubblenet();
+// R::fancyDebug(TRUE);
 
 Forum::$engine->assign('healthnews', CProcess::get_newsfeed());
 Forum::$engine->assign('healthvideo', CProcess::get_video());
