@@ -25,7 +25,7 @@
     }
 </style>
 
-<form method="POST" action="/cardea/{$forum}">
+<form method="POST" action="{$base_url}/{$forum}">
     {if isset($errors)}
     <div class="alert alert-danger" role="alert">
         {$errors}
@@ -97,7 +97,7 @@
         </select>
         
         {if $forum == ''}
-            <a href="/cardea/p2p" class="btn btn-sm btn-info">View Posts</a>
+            <a href="{$base_url}/p2p" class="btn btn-sm btn-info">View Posts</a>
         {else}
             <input type="submit" name="submit" value="Post" class="btn btn-sm btn-primary">
         {/if}
@@ -157,7 +157,7 @@
     </div>
 </div>
 
-<script src="/cardea/static/ckeditor/ckeditor.js"></script>
+<script src="{$base_url}/static/ckeditor/ckeditor.js"></script>
 
 <script>
     CKEDITOR.replace('blogtext',{
@@ -182,7 +182,7 @@
             return;
         }
 
-        $.get('/cardea/posts_suggest',
+        $.get('/posts_suggest',
         {
             keyword: this.value.trim(),
             forum: '{$active}',

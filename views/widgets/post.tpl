@@ -2,7 +2,7 @@
 {assign "profile_url" ""}
 {if $post.identity == 'self'}
     {$mask = $users[$post.user_id]['display_name']}
-    {$profile_url = "href='/cardea/users/{$post.user_id}'"}
+    {$profile_url = "href='{$base_url}/users/{$post.user_id}'"}
 {/if}
 {if $post.identity == 'pseudo'}
     {$mask = $ironmask[$post.id]['pseudonym']}
@@ -41,11 +41,11 @@
 <tr>
     <td style="text-align: justify; padding-top: 10px;" {if $vocab == 'comments'}class="small"{/if}>
         <a style="margin-right: 10px; float: left;" class="small" {$profile_url}>
-            <img alt="{$mask}" src="/cardea/static/identicon/index.php?text={$mask|md5}" />
+            <img alt="{$mask}" src="{$base_url}/static/identicon/index.php?text={$mask|md5}" />
         </a>
         
         {if $vocab !== 'post' && $vocab !== 'comments'}
-            <a href="/cardea/post/{$post.id}/{$active}"><b>{$post.title}</b></a>
+            <a href="{$base_url}/post/{$post.id}/{$active}"><b>{$post.title}</b></a>
         {else}
             <b>{$post.title}</b>
         {/if}
@@ -101,7 +101,7 @@
     {if $veracity !== ''}<a href="#"><b>Trust Score</b> <span class="badge progress-bar-{$label}">{$veracity}</span></a>{/if}
     <br />
     <span class="text-muted">
-        Posted by <a {$profile_url}>{$mask}</a> {if $vocab != 'comments'}in the <a href="/cardea/group/{$post.forum}/{$post.parent_id}">{$groups[$post.parent_id]['title']}</a> support group {/if}on {$post.time_stamp|date_format:"%b %e, %Y at %I:%M %p"}
+        Posted by <a {$profile_url}>{$mask}</a> {if $vocab != 'comments'}in the <a href="{$base_url}/group/{$post.forum}/{$post.parent_id}">{$groups[$post.parent_id]['title']}</a> support group {/if}on {$post.time_stamp|date_format:"%b %e, %Y at %I:%M %p"}
     </span>
     </td>
 </tr>

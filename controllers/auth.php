@@ -8,10 +8,11 @@ class Auth extends Core
     static $public_parity;
     static $rsa;
     static $email;
+    static $admin_email;
 
-    static private function check_logged()
+    static function check_logged()
     {
-        if (isset($_SESSION['display_name'])) header('Location: /cardea');
+        if (isset($_SESSION['display_name'])) header('Location: '.parent::$base_url);
     }
 
     static private function validate()
@@ -72,8 +73,10 @@ class Auth extends Core
     
     static function send_mail($to, $subject, $message)
     {
-        $from = "cardea@localhost.com";
-        $headers = "From: $from\r\nReply-To: $from\r\nX-Mailer: PHP/".phpversion();
+        $from = self::$admin_email;
+        $headers = "From: Cardea Health <$from>\r\nReply-To: $from\r\nX-Mailer: PHP/".phpversion();
+        $headers .= 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
         mail($to, $subject, $message, $headers);
     }
@@ -100,8 +103,9 @@ class Auth extends Core
             $user->login_key_expiry = $login_key_expiry;
             R::store($user);
 
-            $title = "Passwordless Sign In [Cardea]";
-            $msg = "Here is your passwordless sign in link to Cardea (it expires in 1 hour)\r\n\r\nhttp://localhost/cardea/passwordless?key=$login_key";
+            $base_url = parent::$base_url;
+            $title = "Passwordless Sign In for Cardea Health";
+            $msg = "Here is your passwordless sign in link to Cardea (it expires in 1 hour)<br /><br /><a href='$base_url/passwordless?key=$login_key'>Sign In</a>";
             self::send_mail(self::$email, $title, $msg);
         }
         return self::index();
@@ -227,8 +231,9 @@ class Auth extends Core
 
         $stateless = base64_encode("$email;$display_name;$about_self;$role");
 
-        $title = "New User Registration [Cardea]";
-        $msg = "Please click the link below to confirm your Cardea account (if you did not register, you can safely delete this message)\r\n\r\nhttp://localhost/cardea/confirm?user=$stateless";
+        $base_url = parent::$base_url;
+        $title = "New User Registration for Cardea Health";
+        $msg = "Please click the link below to confirm your Cardea Health account (if you did not register, you can safely delete this message)<br /><br /><a href='base_url/confirm?user=$stateless'>Confirm Email</a>";
         self::send_mail($email, $title, $msg);
         parent::$engine->assign('info', "Please check your email to confirm your account before you can use it");
         self::register();
@@ -268,7 +273,7 @@ class Auth extends Core
 
     static function get_ip_address()
     {
-        $options = array('http' => array('user_agent' => 'Cardea Academic Project <hwsamuel@ualberta.ca>'));
+        $options = array('http' => array('user_agent' => 'Cardea Health Academic Project <hwsamuel@ualberta.ca>'));
         $context = stream_context_create($options);
         $response = file_get_contents("http://bot.whatismyipaddress.com", FALSE, $context);
 
@@ -301,13 +306,13 @@ class Auth extends Core
         R::store($user);
 
         $_SESSION['display_name'] = $valid_key;
-        header('Location: /cardea');
+        header('Location: '.parent::$base_url);
     }
 
     static function logout()
     {
         session_unset();
         session_destroy();
-        header('Location: /cardea');
+        header('Location: '.parent::$base_url);
     }
 }

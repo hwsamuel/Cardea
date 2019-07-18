@@ -2,10 +2,10 @@
 
 {block name=scripts}
 <!-- JavaScript RSA encryption library -->
-<script type="text/javascript" src="/cardea/static/jsbn/jsbn.js"></script>
-<script type="text/javascript" src="/cardea/static/jsbn/prng4.js"></script>
-<script type="text/javascript" src="/cardea/static/jsbn/rng.js"></script>
-<script type="text/javascript" src="/cardea/static/jsbn/rsa.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/jsbn.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/prng4.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/rng.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/rsa.js"></script>
 
 <script>
 function encrypt() 
@@ -20,7 +20,7 @@ function encrypt()
 
 {block name=content}
 <p>
-<form method="POST" action="/cardea/register">
+<form method="POST" action="{$base_url}/register">
     <p><b>Register New Account</b></p>
     
     {if isset($error)}
@@ -50,13 +50,13 @@ function encrypt()
     </div>
 
     <div class="form-group">
-        Are you a medical professional or medical researcher? If yes, review our <a href="">Verification Process</a>
+        Are you a medical professional or medical researcher? If yes, review our <a href="#">Verification Process</a>
         <input type="radio" name="role" value=1 /> Yes
         <input type="radio" name="role" checked="true" value=0 /> No
     </div>
 
     <div class="form-group">
-         <span class="glyphicon glyphicon-ok"></span>&nbsp; You agree to our <strong><a href="#">Privacy Policy</a></strong>&nbsp; <a href="/cardea" class="btn btn-danger">Cancel If You Disagree</a>
+         <span class="glyphicon glyphicon-ok"></span>&nbsp; You agree to our <strong><a href="#">Privacy Policy</a></strong>&nbsp; <a href="{$base_url}" class="btn btn-danger">Cancel If You Disagree</a>
         <button type="submit" onclick="encrypt();" class="btn btn-success">Create Account</button>
     </div>
 

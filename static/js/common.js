@@ -1,7 +1,7 @@
 // References: /cardea/views/widgets/posts.tpl
 function commentCreate(post_id,vocab,forum) 
 {
-    $.post('/cardea/comment_create', // Reference: /cardea/controllers/comment.php
+    $.post('/comment_create', // Reference: /cardea/controllers/comment.php
     {
         post_id: post_id,
         title: $('#new-'+vocab+'-comment-'+post_id).val(),
@@ -62,7 +62,7 @@ function voteProcess(post_id,type_of,forum)
 
 function voteCreate(post_id,type_of) 
 {
-    $.post('/cardea/vote_create', // Reference: /cardea/controllers/vote.php
+    $.post('/vote_create', // Reference: /cardea/controllers/vote.php
     {
         post_id: post_id,
         type_of: type_of
@@ -111,7 +111,7 @@ function voteCreate(post_id,type_of)
 
 function voteDelete(post_id,type_of) 
 {
-    $.post('/cardea/vote_delete', // Reference: /cardea/controllers/vote.php
+    $.post('/vote_delete', // Reference: /cardea/controllers/vote.php
     {
         post_id: post_id,
         type_of: type_of

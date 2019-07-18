@@ -140,7 +140,7 @@ class Forum extends Core
 
     static function index()
     {
-        if (isset($_SESSION['display_name'])) header('Location: /cardea/p2p');
+        if (isset($_SESSION['display_name'])) header('Location: '.parent::$base_url.'/p2p');
         self::$engine->assign('active', NULL);
         self::$engine->display('views/home.tpl');
     }

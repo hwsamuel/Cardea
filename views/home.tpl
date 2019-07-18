@@ -17,17 +17,17 @@
         <div class="col-md-4">
             <h4>Patient to Patient</h4>
             <p class="text-justify">Share experiences with other patients while keeping track of privacy and credibility.</p>
-            <p><a class="btn btn-black btn-warning" href="/cardea/p2p" role="button">Go to P2P Forum</a></p>
+            <p><a class="btn btn-black btn-warning" href="{$base_url}/p2p" role="button">Go to P2P Forum</a></p>
         </div>
         <div class="col-md-4">
             <h4>Patient to Medic</h4>
             <p class="text-justify">Post questions to medical professionals while maintaining confidentiality.</p>
-            <p><a class="btn btn-black btn-warning" href="/cardea/p2m" role="button">Go to P2M Forum</a></p>
+            <p><a class="btn btn-black btn-warning" href="{$base_url}/p2m" role="button">Go to P2M Forum</a></p>
         </div>
         <div class="col-md-4">
             <h4>Medic to Medic</h4>
             <p class="text-justify">Medical professionals can share knowledge across geographical boundaries.</p>
-            <p><a class="btn btn-black btn-warning" href="/cardea/m2m" role="button">Go to M2M Forum</a></p>
+            <p><a class="btn btn-black btn-warning" href="{$base_url}/m2m" role="button">Go to M2M Forum</a></p>
         </div>
     </div>
     </div>

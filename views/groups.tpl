@@ -4,7 +4,7 @@
 <br />
 {foreach from=$groups item=group}
     <p>
-    	<a href="/cardea/group/{$group.id}"><b>{$group.title}</b></a><br />
+    	<a href="{$base_url}/group/{$group.id}"><b>{$group.title}</b></a><br />
     	<small>{$group.content}</small>
     </p>
 {/foreach}

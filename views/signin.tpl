@@ -2,10 +2,10 @@
 
 {block name=scripts}
 <!-- JavaScript RSA encryption library -->
-<script type="text/javascript" src="/cardea/static/jsbn/jsbn.js"></script>
-<script type="text/javascript" src="/cardea/static/jsbn/prng4.js"></script>
-<script type="text/javascript" src="/cardea/static/jsbn/rng.js"></script>
-<script type="text/javascript" src="/cardea/static/jsbn/rsa.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/jsbn.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/prng4.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/rng.js"></script>
+<script type="text/javascript" src="{$base_url}/static/jsbn/rsa.js"></script>
 
 <script>
 function encrypt() 
@@ -20,7 +20,7 @@ function encrypt()
 
 {block name=content}
 <p>
-<form class="form-inline" method="POST" action="/cardea/signin">
+<form class="form-inline" method="POST" action="{$base_url}/signin">
     <p><b>Passwordless Sign In</b></p>
     
     {if isset($error)}
@@ -41,7 +41,7 @@ function encrypt()
         <input required type="hidden" name="email" id="email" />
     </div>
     <button type="submit" onclick="encrypt();" class="btn btn-default">Sign In</button>
-    <a class="btn btn-warning" href="/cardea/register">Register</a>
+    <a class="btn btn-warning" href="{$base_url}/register">Register</a>
 </form>
 </p>
 

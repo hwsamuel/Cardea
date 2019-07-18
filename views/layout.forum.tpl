@@ -52,7 +52,7 @@
     }
 </style>
         
-<script src="/cardea/static/d3/d3.v3.min.js"></script>
+<script src="{$base_url}/static/d3/d3.v3.min.js"></script>
 
 <div class="row">
     <div role="tabpanel" class="col-xs-3">
@@ -66,9 +66,9 @@
         <br /><br />
         <span class="text-muted">Support Group Filter</span>
         <div class="scrollholder">
-            <a href="/cardea/{$active}" {if !isset($selgroup)}style="background: #AAA; color: #000; display: inline-block; width: 255px; margin-left: -5px; padding-left: 5px;"{/if}>All Groups</a><br />
+            <a href="{$base_url}/{$active}" {if !isset($selgroup)}style="background: #AAA; color: #000; display: inline-block; width: 255px; margin-left: -5px; padding-left: 5px;"{/if}>All Groups</a><br />
             {foreach from=$groups item=grp}
-                <a href="/cardea/group/{$active}/{$grp.id}" {if isset($selgroup) && $selgroup == $grp.id}style="background: #AAA; color: #000; display: inline-block; width: 255px; margin-left: -5px; padding-left: 5px;"{/if}> {$grp.title}</a><br />
+                <a href="{$base_url}/group/{$active}/{$grp.id}" {if isset($selgroup) && $selgroup == $grp.id}style="background: #AAA; color: #000; display: inline-block; width: 255px; margin-left: -5px; padding-left: 5px;"{/if}> {$grp.title}</a><br />
             {/foreach}
         </div>
         <br />
@@ -85,7 +85,7 @@
 
     <div class="col-xs-3">
         <br />
-        <a target="_blank" href="https://www.canada.ca/en/health-canada.html"><b>Health Canada News</b> <img src="/cardea/static/img/canada.png" style="height: 10px" /></a>
+        <a target="_blank" href="https://www.canada.ca/en/health-canada.html"><b>Health Canada News</b> <img src="{$base_url}/static/img/canada.png" style="height: 10px" /></a>
         <div class="feed">
             {foreach from=$healthnews item=news}
                 <p>
@@ -103,7 +103,7 @@
 
         <div id="container">
             <div id="main_image"><img src="https://i4.ytimg.com/vi/{$healthvideo.vid}/hqdefault.jpg" alt="{$healthvideo.title}" style="width: 260px; border: 1px solid #CCC; padding: 2px;" /></div>
-            <div id="overlay_image"><a href="#play-yt-video" data-toggle="modal"><img src="/cardea/static/img/yt.png" style="width: 100px;" alt="Play" /></a></div>
+            <div id="overlay_image"><a href="#play-yt-video" data-toggle="modal"><img src="{$base_url}/static/img/yt.png" style="width: 100px;" alt="Play" /></a></div>
         </div>
         
         <div id="play-yt-video" class="modal fade">
@@ -199,7 +199,7 @@ node.append("text")
 
 node.on("dblclick", function(d)
 {
-    window.open("/cardea/search/{$active}/"+d.name,"_self");
+    window.open("{$base_url}/search/{$active}/"+d.name,"_self");
 });
 
 function tick()
@@ -241,7 +241,7 @@ $('#searchbox').bind("keyup", null, function(event) {
         return;
     }
 
-    $.get('/cardea/search_suggest',
+    $.get('/search_suggest',
     {
         keyword: this.value.trim(),
         forum: '{$active}'
@@ -282,7 +282,7 @@ function searchForum()
 {
     var kws = $('#searchbox').val().trim();
     if (kws.length < 3) return;
-    var url = '/cardea/search/{$active}/'+kws;
+    var url = '/search/{$active}/'+kws;
     window.open(url, '_self');
 }
 
