@@ -39,6 +39,9 @@ Auth::$public_key = $PUB_KEY;
 Auth::$public_parity = $PUB_PARITY;
 Auth::$admin_email = $ADMIN_EMAIL;
 
+// Uncomment to re-generate RSA key pairs and manually update them in config.php
+// print_r(Auth::$rsa->generate_keys());
+
 Forum::$engine->assign('healthnews', Process::get_newsfeed());
 Forum::$engine->assign('healthvideo', Process::get_video());
 
