@@ -15,7 +15,7 @@ class Vote
         ]);
         self::$post_id = $_POST['post_id'];
         self::$type_of = trim($_POST['type_of']);
-        self::$user_id = $_SESSION['display_name'];
+        self::$user_id = Auth::get_logged();
         
         $post = R::load('posts', self::$post_id);
         

@@ -10,7 +10,7 @@
     }
 </script>
 <br />
-{if isset($smarty.session.display_name)}
+{if isset($smarty.session.cardea)}
     {include file='widgets/status.tpl' forum=$active}
 {/if}
 

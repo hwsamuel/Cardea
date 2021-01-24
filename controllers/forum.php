@@ -140,9 +140,15 @@ class Forum extends Core
 
     static function index()
     {
-        if (isset($_SESSION['display_name'])) header('Location: '.parent::$base_url.'/p2p');
+        Auth::is_logged(parent::$base_url.'/p2p');
         self::$engine->assign('active', NULL);
         self::$engine->display('views/home.tpl');
+    }
+
+    static function cookies()
+    {
+        self::$engine->assign('active', NULL);
+        self::$engine->display('views/cookies.tpl');
     }
 
     static function get_subset($posts, $type)
@@ -233,7 +239,7 @@ class Forum extends Core
             $post = self::get_preview($post);
         }
 
-        $questions = self::get_subset($posts, 'question'); //R::findAll('posts', "forum = '$forum' AND type_of = 'question' AND is_blocked = 0 $group_filter ORDER BY time_stamp DESC");
+        #$questions = self::get_subset($posts, 'question'); //R::findAll('posts', "forum = '$forum' AND type_of = 'question' AND is_blocked = 0 $group_filter ORDER BY time_stamp DESC");
         $discussions = self::get_subset($posts, 'discussion'); //R::findAll('posts', "forum = '$forum' AND type_of = 'discussion' AND is_blocked = 0 $group_filter ORDER BY time_stamp DESC");
         $blogs = self::get_subset($posts, 'blog'); //R::findAll('posts', "forum = '$forum' AND type_of = 'blog' AND is_blocked = 0 $group_filter ORDER BY time_stamp DESC");
         $chats = self::get_subset($posts, 'chat'); //R::findAll('posts', "forum = 'p2m' AND type_of = 'chat' AND is_blocked = 0 $group_filter ORDER BY time_stamp DESC");
@@ -244,7 +250,7 @@ class Forum extends Core
         $ironmask = R::findAll('ironmask');
         $users = R::findAll('users');
 
-        self::$engine->assign('questions', $questions);
+        #self::$engine->assign('questions', $questions);
         self::$engine->assign('discussions', $discussions);
         self::$engine->assign('blogs', $blogs);
         self::$engine->assign('chats', $chats);
@@ -261,7 +267,7 @@ class Forum extends Core
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $type_of = $_POST['seltab'];
         $parent_id = $_POST['group'];
-        $user_id = $_SESSION['display_name'];
+        $user_id = Auth::get_logged();
         $visibility = $_POST['privacy'];
         $identity = $_POST['identity'];
         $content = '';

@@ -27,26 +27,20 @@ $smarty->auto_literal = TRUE;
 $smarty->left_delimiter = "{"; 
 $smarty->right_delimiter = "}";
 
-$groups = R::findAll('posts', "type_of = 'group' AND visibility = 'public'"); // @todo Add visibility filter
-$smarty->assign('groups', $groups);
-
 Core::$engine = $smarty;
 Core::$base_url = $BASE_URL;
 Core::$base_route = $BASE_ROUTE;
 Core::$engine->assign('base_url', $BASE_URL);
 
-$rsa = new RSA($PUB_KEY, $PRIV_KEY);
+Core::$engine->assign('groups', R::findAll('posts', "type_of = 'group'"));
+
+Auth::$rsa = new RSA($PUB_KEY, $PRIV_KEY);
 Auth::$public_key = $PUB_KEY;
 Auth::$public_parity = $PUB_PARITY;
-Auth::$rsa = $rsa;
 Auth::$admin_email = $ADMIN_EMAIL;
 
-// print_r($rsa->generate_keys());
-// CProcess::get_bubblenet();
-// R::fancyDebug(TRUE);
-
-Forum::$engine->assign('healthnews', CProcess::get_newsfeed());
-Forum::$engine->assign('healthvideo', CProcess::get_video());
+Forum::$engine->assign('healthnews', Process::get_newsfeed());
+Forum::$engine->assign('healthvideo', Process::get_video());
 
 $router = new AltoRouter();
 foreach ($ROUTES as $route)

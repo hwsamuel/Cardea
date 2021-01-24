@@ -45,18 +45,21 @@
     <script src="{$base_url}/static/js/common.js"></script>
 
     {block name=styles}{/block}
+
 	{block name=scripts}{/block}
+
+    <!-- Hotjar Tracking Code for https://www.cardeahealth.ca -->
     <script>
-        Userback = window.Userback || {};
-        Userback.access_token = '7454|11795|PG5uZ67WN5tB8fmyGgeQIEgJhorBwVs9QP4n8N3QCgTFBYt7h4';
-        (function(id) {
-            var s = document.createElement('script');
-            s.async = 1;s.src = 'https://static.userback.io/widget/v1.js';
-            var parent_node = document.head || document.body;parent_node.appendChild(s);
-        })('userback-sdk');
+        (function(h,o,t,j,a,r) {
+            h.hj=h.hj||function(){ (h.hj.q=h.hj.q||[]).push(arguments) };
+            h._hjSettings={ hjid:2047589,hjsv:6 };
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     </script>
 </head>
-
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -69,7 +72,7 @@
 	          	</button>
 	          	<a class="navbar-brand" id="logo" href="{$base_url}">
                     <span class="orange-text">C</span><span class="white-text">ardea <span class="orange-text">H</span>ealth</span>
-                    <img alt="Cardea" src="{$base_url}/static/img/logo.png" style="height: 30px;" />
+                    <img alt="Cardea Health" src="{$base_url}/static/img/logo.png" style="height: 30px;" />
                 </a> 
                 <span class="navbar-brand small" style="font-size: 12pt;">Alpha Version</span>
 			</div>
@@ -80,7 +83,7 @@
 	        		<li {if isset($active) && $active == "m2m"}class="active"{/if}><a href="{$base_url}/m2m">Medic to Medic <span class="badge">M2M</span></a></li>
                     <li {if isset($active) && $active == "groups"}class="active"{/if}><a href="{$base_url}/groups">Support Groups</a></li>
 				
-                {if !isset($smarty.session.display_name)}
+                {if !isset($smarty.session.cardea)}
                     <li>
                     <div class="navbar-form navbar-right">
 				    <a href="{$base_url}/signin" class="btn btn-danger">Sign In</a>
@@ -91,12 +94,12 @@
             </div>
 		</div>
         
-        {if isset($smarty.session.display_name)}
+        {if isset($smarty.session.cardea)}
         <div id="extra_bar">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <b><span class="glyphicon glyphicon-bookmark"></span> <a href="{$base_url}/profile">{$smarty.session.display_name}</a></b><span class="space">&nbsp;</span>
+                        <b><span class="glyphicon glyphicon-bookmark"></span> <a href="{$base_url}/profile">{$smarty.session.cardea.display_name}</a></b><span class="space">&nbsp;</span>
                         <span class="text-muted small">View your profile</span>
                     </div>
                     <div class="col-md-8 text-right">
@@ -111,7 +114,7 @@
         {/if}
     </div>
     
-    <div class="container" {if isset($smarty.session.display_name)}style="margin-top: 25px"{/if}>
+    <div class="container" {if isset($smarty.session.cardea)}style="margin-top: 25px"{/if}>
     	<noscript>
   	    <div class="alert alert-danger" role="alert">
   	        This website will <b>not</b> function without JavaScript. Please enable JavaScript to continue.
@@ -129,19 +132,28 @@
                 <table style="width:100%;">
                 <tr>
                 <td>
-                    &copy; 2019 All Rights Reserved. This project is for academic research purposes and supported by the <b><a target="_blank" href="http://amii.ca">Alberta Machine Intelligence Institute (Amii)</a></b>
+                    <a target="_blank" href="http://amii.ca"><img alt="Amii" style="height: 40px; margin-top:-10px; margin-left: 15px;" src="{$base_url}/static/img/amii.png" /></a>
                 </td>
                 <td>
-                    <a target="_blank" href="http://amii.ca"><img alt="Amii" style="float: right; height: 45px; margin-top:-10px; margin-left: 15px;" src="{$base_url}/static/img/amii.png" /></a>
-
-                    <a target="_blank" href="https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda-compliance-help/pipeda-compliance-and-training-tools/pipeda_sa_tool_200807/"><img src="{$base_url}/static/img/pipeda.png" alt="PIPEDA Ready" style="height: 20px; margin-right: 10%;" /></a>
-                    
-                    <a target="_blank" href="https://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401-blue" alt="W3C Valid HTML 4.01" /></a>
+                    <p>&copy; 2020 All Rights Reserved. This project is for academic research purposes and supported by the <b><a target="_blank" href="http://amii.ca">Alberta Machine Intelligence Institute (Amii)</a></b>.
+                    </p>
+                    <p>
+                        Contact us via <a href='#'>support@cardeahealth.ca</a> if you have questions or inquiries.
+                    </p>
                 </td>
                 </tr>
                 </table>
             </div>
       	</div>
 	</div>
+    
+    <!-- Cereo widget -->
+	<script type="text/javascript">
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://widget.cereo.io";
+        document.getElementsByTagName("body")[0]
+          .appendChild(script);
+    </script>
 </body>
 </html>

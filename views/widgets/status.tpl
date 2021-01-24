@@ -32,17 +32,17 @@
         <a href="#" class="close pull-right" data-dismiss="alert" aria-label="close">&times;</a>
     </div>
     {/if}
-    <ul class="nav nav-tabs">
+    <!--<ul class="nav nav-tabs">
         <li {if !isset($smarty.post.seltab) || $smarty.post.seltab == 'question'}class="active"{/if}><a id='form-question-tab' onclick="selTab('question');" data-toggle="tab" href="#question-form">Ask</a></li>
         <li {if isset($smarty.post.seltab) && $smarty.post.seltab == 'discussion'}class="active"{/if}><a data-toggle="tab" id='form-discussion-tab' onclick="selTab('discussion');" href="#discussion-form">Discuss</a></li>
         {if $forum!='p2m'}<li {if isset($smarty.post.seltab) && $smarty.post.seltab == 'blog'}class="active"{/if}><a id='form-blog-tab' onclick="selTab('blog');" data-toggle="tab" href="#blog-form">Blog</a></li>{/if}
         {if $forum=='p2m' || $forum == ''}<li {if isset($smarty.post.seltab) && $smarty.post.seltab == 'chat'}class="active"{/if}><a onclick="selTab('chat');" id='form-chat-tab' data-toggle="tab" href="#chat-form">Chat</a></li>{/if}
         <li class="pull-right"><a href="#" class="small" data-toggle="modal" data-target="#postHelp"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
-    </ul>
+    </ul>-->
   
     <div class="tab-content">
         <div class="tab-pane {if !isset($smarty.post.seltab) || $smarty.post.seltab == 'question'}active{/if}" id="question-form">
-            <textarea autocomplete="off" maxlength="420" {if $forum == ''}onkeypress="return false;"{/if} class="postbox form-control input-lg" rows="3" name="questiontext" placeholder="Have a question?"></textarea>
+            <textarea autocomplete="off" maxlength="420" {if $forum == ''}onkeypress="return false;"{/if} class="postbox form-control input-lg" rows="3" name="questiontext" placeholder="What's on your mind?"></textarea>
         </div>
         <div class="tab-pane {if isset($smarty.post.seltab) && $smarty.post.seltab == 'discussion'}active{/if}" id="discussion-form">
             <textarea autocomplete="off" maxlength="420" {if $forum == ''}onkeypress="return false;"{/if} class="postbox form-control input-lg" rows="3" name="discusstext" placeholder="What's on your mind?"></textarea>
@@ -71,7 +71,7 @@
         {/if}
         
         <select required name="identity" class="selectpicker show-tick box-sm" title="Post As">
-            <option value="self" data-subtext="e.g. Posted by {if isset($display_name)}{$display_name}{else}John Smith{/if}" {if isset($smarty.post.identity) && $smarty.post.identity == 'self'}selected="selected"{/if}>Myself</option>
+            <option value="self" data-subtext="e.g. Posted by {if isset($smarty.session.cardea)}{$smarty.session.cardea.display_name}{else}John Smith{/if}" {if isset($smarty.post.identity) && $smarty.post.identity == 'self'}selected="selected"{/if}>Myself</option>
             <option value="pseudo" data-subtext="e.g. Posted by a Medic">Pseudonym</option>
             <option value="anon" data-subtext="e.g. Posted by Anonymous">Anonymous</option>
         </select>

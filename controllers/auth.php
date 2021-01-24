@@ -10,9 +10,15 @@ class Auth extends Core
     static $email;
     static $admin_email;
 
-    static function check_logged()
+    static function is_logged($redirect = NULL)
     {
-        if (isset($_SESSION['display_name'])) header('Location: '.parent::$base_url);
+        if ($redirect == NULL) $redirect = parent::$base_url;
+        if (isset($_SESSION['cardea'])) header('Location: '.$redirect);
+    }
+
+    static function get_logged()
+    {
+        return $_SESSION['cardea']['id'];
     }
 
     static private function validate()
@@ -46,7 +52,7 @@ class Auth extends Core
 
         if ($found == NULL)
         {
-            $error = "Unregistered email, please try again or register a new account";
+            $error = "Unregistered or unconfirmed email, please try again or register a new account";
             return $error;
         }
 
@@ -65,7 +71,7 @@ class Auth extends Core
 
     static function index()
     {
-        self::check_logged();
+        self::is_logged();
         parent::$engine->assign('public_key', self::$public_key);
         parent::$engine->assign('public_parity', self::$public_parity);
         parent::$engine->display('views/signin.tpl');
@@ -83,7 +89,7 @@ class Auth extends Core
 
     static function login()
     {
-        self::check_logged();
+        self::is_logged();
         $valid = self::validate();
         if (!is_int($valid))
         {
@@ -104,8 +110,16 @@ class Auth extends Core
             R::store($user);
 
             $base_url = parent::$base_url;
+
+            // Sign in button created via https://dabuttonfactory.com
+            // Font: Open Sans, Weight: Bold, Font Size: 16, Font Color: #ffffff, Button Size (fixed): 80x40, Button Style: rounded rectangle, Corner radius: 10, Color: #ff9900
+            $click_url = "$base_url/passwordless?key=$login_key";
             $title = "Passwordless Sign In for Cardea Health";
-            $msg = "Here is your passwordless sign in link to Cardea (it expires in 1 hour)<br /><br /><a href='$base_url/passwordless?key=$login_key'>Sign In</a>";
+            $head = "<h2><span style='color: #EC971F;'>C</span><span style='color: #333;'>ardea <span style='color: #EC971F;'>H</span><span style='color: #333;'>ealth</span> <img alt='Cardea Health' src='$base_url/static/img/logo-sm.png' /></h2>";
+            $button = "<a href='$click_url'><img src='$base_url/static/img/button_sign-in.png' alt='Sign In' /></a>";
+            $altext = "<span style='font-size: 10pt; color: #AAA;'>If the above link doesn't work, copy-paste the following link into your browser<br />$click_url</span>";
+            $msg = "<div style='font-family: Arial, sans-serif; font-size: 11pt;'>$head Here is your passwordless sign in link to Cardea (it expires in 1 hour)<br /><br />$button<br /><br />$altext</div>";
+
             self::send_mail(self::$email, $title, $msg);
         }
         return self::index();
@@ -141,7 +155,10 @@ class Auth extends Core
         $user->last_ip = self::get_ip_address();
         $id = R::store($user);
 
-        $_SESSION['display_name'] = $id;
+        $user->id = $id;
+        $user->email = NULL; // Hide email hash from session
+
+        $_SESSION['cardea'] = $user;
         self::index();
     }
 
@@ -232,16 +249,24 @@ class Auth extends Core
         $stateless = base64_encode("$email;$display_name;$about_self;$role");
 
         $base_url = parent::$base_url;
+        
+        // Register button created via https://dabuttonfactory.com 
+        // Font: Open Sans, Weight: Bold, Font Size: 16, Font Color: #ffffff, Button Size (fixed): 80x40, Button Style: rounded rectangle, Corner radius: 10, Color: #ff9900
+        $click_url = "$base_url/confirm?user=$stateless";
         $title = "New User Registration for Cardea Health";
-        $msg = "Please click the link below to confirm your Cardea Health account (if you did not register, you can safely delete this message)<br /><br /><a href='base_url/confirm?user=$stateless'>Confirm Email</a>";
+        $head = "<h2><span style='color: #EC971F;'>C</span><span style='color: #333;'>ardea <span style='color: #EC971F;'>H</span><span style='color: #333;'>ealth</span> <img alt='Cardea Health' src='$base_url/static/img/logo-sm.png' /></h2>";
+        $button = "<a href='$click_url'><img src='$base_url/static/img/button_register.png' alt='Confirm Email' /></a>";
+        $altext = "<span style='font-size: 10pt; color: #AAA;'>If the above link doesn't work, copy-paste the following link into your browser<br />$click_url</span>";
+        $msg = "<div style='font-family: Arial, sans-serif; font-size: 11pt;'>$head Please click the link below to confirm your Cardea Health account (if you did not register, you can safely delete this message)<br /><br />$button<br /><br />$altext</div>";
+        
         self::send_mail($email, $title, $msg);
-        parent::$engine->assign('info', "Please check your email to confirm your account before you can use it");
+        parent::$engine->assign('info', "Please check your email to confirm your account");
         self::register();
     }
 
     static function register($bug = NULL)
     {
-        self::check_logged();
+        self::is_logged();
 
         if ($bug !== NULL) parent::$engine->assign('error', $bug);
         parent::$engine->assign('public_key', self::$public_key);
@@ -273,7 +298,7 @@ class Auth extends Core
 
     static function get_ip_address()
     {
-        $options = array('http' => array('user_agent' => 'Cardea Health Academic Project <hwsamuel@ualberta.ca>'));
+        $options = array('http' => array('user_agent' => 'Cardea Health <support@cardeahealth.ca>'));
         $context = stream_context_create($options);
         $response = file_get_contents("http://bot.whatismyipaddress.com", FALSE, $context);
 
@@ -282,7 +307,7 @@ class Auth extends Core
 
     static function passwordless()
     {
-        self::check_logged();
+        self::is_logged();
 
         $_GET = filter_input_array(INPUT_GET, 
         [
@@ -290,22 +315,24 @@ class Auth extends Core
         ]);
         
         $login_key = $_GET['key'];
-        $valid_key = self::check_login_key($login_key);
+        $uid = self::check_login_key($login_key);
 
-        if (!is_int($valid_key))
+        if (!is_int($uid))
         {
-            parent::$engine->assign('error', $valid_key);
+            parent::$engine->assign('error', $uid);
             return self::index();
         }
         
-        $user = R::load('users', $valid_key);
+        $user = R::load('users', $uid);
         $user->login_key = NULL;
         $user->login_key_expiry = NULL;
         $user->last_login = date("Y-m-d H:i:s");
         $user->last_ip = self::get_ip_address();
         R::store($user);
 
-        $_SESSION['display_name'] = $valid_key;
+        $user->email = NULL; // Hide user email hash from session
+
+        $_SESSION['cardea'] = $user;
         header('Location: '.parent::$base_url);
     }
 

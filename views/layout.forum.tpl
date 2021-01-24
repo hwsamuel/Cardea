@@ -23,7 +23,7 @@
         border: 1px solid #CCC;
         background: #EEE;
         width: 255px;
-        top: {if isset($smarty.session.display_name)}125px{else}100px{/if};
+        top: {if isset($smarty.session.cardea)}125px{else}100px{/if};
         font-size: 12px;
         display: none;
         position: fixed;
@@ -85,12 +85,17 @@
 
     <div class="col-xs-3">
         <br />
+        <b style="color: #C11;">Disclaimer</b>
+        <div class="disclaimer">
+             <small>The information, advice, links and/or any other materials made available through Cardea Health are for informational purposes only and are not a substitute for professional medical advice, diagnosis, treatment or consultation.</small>
+        </div>
+
         <a target="_blank" href="https://www.canada.ca/en/health-canada.html"><b>Health Canada News</b> <img src="{$base_url}/static/img/canada.png" style="height: 10px" /></a>
         <div class="feed">
             {foreach from=$healthnews item=news}
                 <p>
                     <a href="{$news.link}" target="_blank">{$news.title} <span class="glyphicon glyphicon-new-window"></span></a><br />
-                    {if isset($smarty.session.display_name) && !isset($vocab) && !isset($search_terms)}<a class="label label-default" onclick="startDiscuss('{$news.title}','{$news.link}')">Discuss</a>{/if}
+                    {if isset($smarty.session.cardea) && !isset($vocab) && !isset($search_terms)}<a class="label label-default" onclick="startDiscuss('{$news.title}','{$news.link}')">Discuss</a>{/if}
                 </p>
             {foreachelse}
                 No RSS feeds available
@@ -99,7 +104,7 @@
         <br />
         <a href="https://www.youtube.com/user/HealthyCdns/" target="_blank"><b>Healthy Canadians</b></a><br />
         <span class="small">{$healthvideo.title}</span>
-        {if isset($smarty.session.display_name) && !isset($vocab) && !isset($search_terms)}<a class="label label-default" onclick="startDiscuss('{$healthvideo.title}','https://www.youtube.com/watch?v={$healthvideo.vid}');">Discuss</a>{/if}
+        {if isset($smarty.session.cardea) && !isset($vocab) && !isset($search_terms)}<a class="label label-default" onclick="startDiscuss('{$healthvideo.title}','https://www.youtube.com/watch?v={$healthvideo.vid}');">Discuss</a>{/if}
 
         <div id="container">
             <div id="main_image"><img src="https://i4.ytimg.com/vi/{$healthvideo.vid}/hqdefault.jpg" alt="{$healthvideo.title}" style="width: 260px; border: 1px solid #CCC; padding: 2px;" /></div>
@@ -115,8 +120,8 @@
                     </div>
 
                     <div class="modal-body">
-                        <iframe id="healthvideo-container" width="565" height="400" src="https://www.youtube-nocookie.com/embed/{$healthvideo.vid}?autoplay=1&rel=0&controls=0&showinfo=0" style="border: 2px solid #CCC;"></iframe>
-                        {if isset($smarty.session.display_name) && !isset($vocab) && !isset($search_terms)}<a data-dismiss="modal" class="label label-default" onclick="startDiscuss('{$healthvideo.title}','https://www.youtube.com/watch?v={$healthvideo.vid}');">Discuss</a>{/if}
+                        <iframe id="healthvideo-container" width="565" height="400" src="https://www.youtube-nocookie.com/embed/{$healthvideo.vid}?autoplay=0&rel=0&controls=0&showinfo=0" style="border: 2px solid #CCC;"></iframe>
+                        {if isset($smarty.session.cardea) && !isset($vocab) && !isset($search_terms)}<a data-dismiss="modal" class="label label-default" onclick="startDiscuss('{$healthvideo.title}','https://www.youtube.com/watch?v={$healthvideo.vid}');">Discuss</a>{/if}
                     </div>
                 </div>
             </div>

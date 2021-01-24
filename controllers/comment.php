@@ -26,7 +26,7 @@ class Comment extends Core
         self::$title = trim($_POST['title']);
         self::$identity = trim($_POST['identity']);
         self::$forum = trim($_POST['forum']);
-        self::$user_id = $_SESSION['display_name'];
+        self::$user_id = Auth::get_logged();
         
         $post = R::load('posts', self::$post_id);
         

@@ -12,7 +12,7 @@
         {$mask = 'Anonymous Patient'}
     {elseif $mask == 'medic'}
         {$mask = 'Anonymous Medic'}
-    {elseif $mask == 'connection' && isset($smarty.session.display_name)}
+    {elseif $mask == 'connection' && isset($smarty.session.cardea)}
         {$mask = 'Your Anonymous Connection'}
     {else}
         {$mask = 'Anonymous'}
@@ -43,8 +43,9 @@
         <a style="margin-right: 10px; float: left;" class="small" {$profile_url}>
             <img alt="{$mask}" src="{$base_url}/static/identicon/index.php?text={$mask|md5}" />
         </a>
-        
-        {if $vocab !== 'post' && $vocab !== 'comments'}
+        {if $post.type_of == 'discussion' || $post.type_of == 'comment' || $post.type_of == 'answer'}
+            <a href="{$base_url}/post/{$post.id}/{$active}">{$post.content|truncate:200:"..."}</a>
+        {else if $vocab !== 'post' && $vocab !== 'comments'}
             <a href="{$base_url}/post/{$post.id}/{$active}"><b>{$post.title}</b></a>
         {else}
             <b>{$post.title}</b>
@@ -64,7 +65,7 @@
         {assign "neglabel" "dislike"}
         {foreach from=$votes item=vote}
             {if ($vote.post_id == $post.id)}
-                {if isset($smarty.session.display_name) && $vote.user_id == $smarty.session.display_name}
+                {if isset($smarty.session.cardea) && $vote.user_id == $smarty.session.cardea}
                     {if ($vote.type_of == 'positive')}
                         {$poslabel = "liked"}
                     {elseif ($vote.type_of == 'negative')}
@@ -89,9 +90,9 @@
         {/foreach}
         {/if}
         
-        <a class="votes" {if isset($smarty.session.display_name)}style="cursor: pointer;" onclick="voteProcess('{$post.id}','positive');"{/if}><span class="glyphicon glyphicon-thumbs-up"></span> <span id="like-label-{$post.id}">{$poslabel|capitalize}</span></a> <span id="like-counter-{$post.id}" class="badge alert-info">{$pos}</span><span class="space-right"></span>
+        <a class="votes" {if isset($smarty.session.cardea)}style="cursor: pointer;" onclick="voteProcess('{$post.id}','positive');"{/if}><span class="glyphicon glyphicon-thumbs-up"></span> <span id="like-label-{$post.id}">{$poslabel|capitalize}</span></a> <span id="like-counter-{$post.id}" class="badge alert-info">{$pos}</span><span class="space-right"></span>
         
-        <a class="votes text-danger" {if isset($smarty.session.display_name)}style="cursor: pointer;" onclick="voteProcess('{$post.id}','negative');"{/if}><span class="glyphicon glyphicon-thumbs-down text-danger"></span> <span id="dislike-label-{$post.id}">{$neglabel|capitalize}</span></a> <span id="dislike-counter-{$post.id}" class="badge alert-danger">{$neg}</span><span class="space-right"></span>
+        <a class="votes text-danger" {if isset($smarty.session.cardea)}style="cursor: pointer;" onclick="voteProcess('{$post.id}','negative');"{/if}><span class="glyphicon glyphicon-thumbs-down text-danger"></span> <span id="dislike-label-{$post.id}">{$neglabel|capitalize}</span></a> <span id="dislike-counter-{$post.id}" class="badge alert-danger">{$neg}</span><span class="space-right"></span>
     </span>
     {if $vocab != 'comments'}
     <span>

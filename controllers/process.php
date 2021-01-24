@@ -1,7 +1,7 @@
 <?php
 // Processes that run separate of main web app
 
-class CProcess
+class Process
 {
     // BubbleNet keywords and documents inverted indexer O(n^2)
     static function get_bubblenet()
@@ -38,11 +38,11 @@ class CProcess
     // @todo Add cache
     static function get_newsfeed()
     {
-        $rss = simplexml_load_file('https://www.canada.ca/content/canadasite/en/health-canada.atom.xml');
+        $rss = simplexml_load_file('https://www.healthycanadians.gc.ca/recall-alert-rappel-avis/rss/feed-32-eng.xml');
         $healthnews = array();
-        foreach ($rss->entry as $item) 
+        foreach ($rss->channel->item as $item)
         {
-           $healthnews[] = array('link' => $item->link['href'], 'title' => $item->title);
+           $healthnews[] = array('link' => $item->link, 'title' => $item->title);
         }
         shuffle($healthnews);
         return $healthnews;

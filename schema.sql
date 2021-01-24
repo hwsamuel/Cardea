@@ -28,6 +28,7 @@ CREATE TABLE posts (
     id int(11) NOT NULL AUTO_INCREMENT,
     parent_id int(11) DEFAULT NULL,
     user_id int(11) NOT NULL,
+    source_id int(11) NULL,
     forum enum('p2p','p2m','m2m','all') NOT NULL DEFAULT 'p2m',
     type_of enum('group','question','discussion','blog','comment','message','chat') NOT NULL DEFAULT 'question',
     visibility enum('public','registered','patients','medics','connections','custom') NOT NULL DEFAULT 'public',
@@ -37,27 +38,20 @@ CREATE TABLE posts (
     order_index int(11) DEFAULT NULL,
     time_stamp datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_blocked tinyint(1) DEFAULT '0',
-    PRIMARY KEY (id),
+    PRIMARY KEY (id, source_id),
     FOREIGN KEY (parent_id) REFERENCES posts(id),
     FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (source_id) REFERENCES medspider(id),
     KEY title (title),
     FULLTEXT KEY content (content)
 );
-
--- Custom cascading rules for posts & users
-ALTER TABLE posts
-    ADD CONSTRAINT user_id
-    FOREIGN KEY (user_id)
-    REFERENCES users(id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION;
 
 -- Custom cascading rules for posts & parent posts
 ALTER TABLE posts
     ADD CONSTRAINT parent_id
     FOREIGN KEY (parent_id)
     REFERENCES posts(id)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION;
 
 -- Votes
@@ -139,4 +133,13 @@ CREATE TABLE bubblenet (
     post_id int(11) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (post_id) REFERENCES posts(id)
+);
+
+-- MedSpider
+DROP TABLE IF EXISTS medspider;
+CREATE TABLE medspider (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    title varchar(100) NOT NULL,
+    url varchar(255) NULL,
+    PRIMARY KEY (id)
 );

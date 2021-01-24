@@ -2,6 +2,18 @@
 {
     font-weight: bolder;
 }
+.disclaimer
+{
+    font-size: 10pt; 
+    border: 1px solid #C11; 
+    background: #EEE;
+    color: #555;
+    padding: 10px; 
+    margin-bottom: 10px;
+    height: 120px;
+    overflow: auto;
+    text-align: justify;
+}
 .feed
 {
     font-size: 10pt; 
