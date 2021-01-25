@@ -132,10 +132,7 @@
                 <table style="width:100%;">
                 <tr>
                 <td>
-                    <a target="_blank" href="http://amii.ca"><img alt="Amii" style="height: 40px; margin-top:-10px; margin-left: 15px;" src="{$base_url}/static/img/amii.png" /></a>
-                </td>
-                <td>
-                    <p>&copy; 2020 All Rights Reserved. This project is for academic research purposes and supported by the <b><a target="_blank" href="http://amii.ca">Alberta Machine Intelligence Institute (Amii)</a></b>.
+                    <p>&copy; 2021 All Rights Reserved. This project is for academic research purposes.
                     </p>
                     <p>
                         Contact us via <a href='#'>support@cardeahealth.ca</a> if you have questions or inquiries.
