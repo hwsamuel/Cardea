@@ -10,3 +10,9 @@ Cardea is a Canadian health social network for patients and medical professional
   year = {2021}
 }
 ```
+
+# Live Demo
+
+Cardea Health [alpha version](https://cardeahealth.ca) is available live.
+
+![Cardea Health Alpha Version](demo.png)
