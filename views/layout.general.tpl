@@ -47,18 +47,6 @@
     {block name=styles}{/block}
 
 	{block name=scripts}{/block}
-
-    <!-- Hotjar Tracking Code for https://www.cardeahealth.ca -->
-    <script>
-        (function(h,o,t,j,a,r) {
-            h.hj=h.hj||function(){ (h.hj.q=h.hj.q||[]).push(arguments) };
-            h._hjSettings={ hjid:2047589,hjsv:6 };
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -144,13 +132,15 @@
       	</div>
 	</div>
     
-    <!-- Cereo widget -->
-	<script type="text/javascript">
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "https://widget.cereo.io";
-        document.getElementsByTagName("body")[0]
-          .appendChild(script);
+    <!-- Buglog -->
+    <script>
+      (function(d, s) {
+        s = d.createElement('script');
+        s.src = 'https://api.buglog.io/website/8QJWQ0PWNE/code';
+        s.async = 1;
+        d.head.appendChild(s);
+      })(document);
     </script>
+    <!-- End Buglog -->
 </body>
 </html>
