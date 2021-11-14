@@ -123,7 +123,7 @@
                     <p>&copy; 2021 All Rights Reserved. This project is for academic research purposes.
                     </p>
                     <p>
-                        Contact us via <a href='#'>support@cardeahealth.ca</a> if you have questions or inquiries.
+                        Contact us via <a href='mailto:support@cardeahealth.ca'>support@cardeahealth.ca</a> if you have questions or inquiries.
                     </p>
                 </td>
                 </tr>
